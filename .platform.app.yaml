@@ -1,0 +1,47 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+
+# The name of this app. Must be unique within a project.
+name: app
+
+# The type of the application to build.
+type: nodejs:10
+
+# The hooks that will be performed when the package is deployed.
+# hooks:
+#     build: |
+#         set -e
+
+#     deploy: |
+#         set -e
+
+# The relationships of the application with services or other applications.
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form `<service name>:<endpoint name>`.
+#relationships:
+#    database: "mysqldb:mysql"
+
+# The size of the persistent disk of the application (in MB).
+disk: 128
+
+
+# The configuration of app when it is exposed to the web.
+web:
+    locations:
+        "/":
+            # The public directory of the app, relative to its root.
+            root: "web"
+            # The front-controller script to send non-static requests to.
+            passthru: "/index.html"
+
+source:
+    operations:
+        upstream-update:
+            command: |
+                set -e
+                # A common Git history means a normal merge should be
+                # valid, at least most of the time.
+                git remote add upstream $UPDATE_REMOTE
+                git fetch --all
+                git merge upstream/master
