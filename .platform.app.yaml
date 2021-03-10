@@ -42,6 +42,6 @@ source:
                 set -e
                 # A common Git history means a normal merge should be
                 # valid, at least most of the time.
-                git remote add upstream $UPDATE_REMOTE
-                git fetch --all
+                git remote add upstream https://github.com/devicezero/demo-fleetsite-platformsh.git
+                git pull upstream master --allow-unrelated-histories
                 git merge upstream/master
